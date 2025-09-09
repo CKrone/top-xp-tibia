@@ -9,9 +9,9 @@ import pandas as pd
 import unicodedata
 import requests
 import json
+import math
 import time
 import os
-import re
 
 # -------------------------------
 # Funções auxiliares
@@ -28,6 +28,16 @@ def normalize_name(name):
 def parse_points(points_str):
     """Converte string com vírgulas em inteiro"""
     return int(points_str.replace(',', ''))
+
+def format_xp(value: int) -> str:
+    if value >= 1_000_000:  # milhão ou mais
+        truncated = math.floor(value / 10_000) / 100   # divide, trunca e volta com 2 casas
+        return f"{truncated:.2f}kk"
+    elif value >= 1_000:  # mil ou mais
+        truncated = math.floor(value / 10) / 100   # divide, trunca e volta com 2 casas
+        return f"{truncated:.2f}k"
+    else:
+        return str(value)
 
 # -------------------------------
 # 1) Pegar membros da guild
@@ -195,10 +205,11 @@ grupo_nome = "Eu Mesmo Eu (você)"
 # Gera a mensagem automaticamente a partir do top 20
 yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
 mensagem = (
-    f"Top 20 XP diário - Abrigo de Mendigo - {yesterday_str}\n"
+    f"Top 20 XP diário - Abrigo de Mendigo - {yesterday_str}\n\n"
 )
 for i, member in enumerate(top_20_highscores, start=1):
-    mensagem += f"\u200b{i}. {member['name']} - {member['profession']} - {member['xp_gained']:,} XP ganho\n"
+    xp_gained = format_xp(member['xp_gained'])
+    mensagem += f"\u200b{i}. {member['name']} - Lv {member['level']} - {xp_gained}\n"
 
 mensagem += f"\n_Última Atualização Tibia: 05:40_\n\n"
 
