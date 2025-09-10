@@ -1,58 +1,21 @@
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.edge.service import Service
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from datetime import datetime, timedelta
-from selenium import webdriver
-import time
-import math
-import json
-import os
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-def path(filename):
-    print(os.path.join(BASE_DIR, filename))
-    return os.path.join(BASE_DIR, filename)
-
-def format_xp(value: int) -> str:
-    if value >= 1_000_000:  # milhão ou mais
-        truncated = math.floor(value / 10_000) / 100   # divide, trunca e volta com 2 casas
-        return f"{truncated:.2f}kk"
-    elif value >= 1_000:  # mil ou mais
-        truncated = math.floor(value / 10) / 100   # divide, trunca e volta com 2 casas
-        return f"{truncated:.2f}k"
-    else:
-        return str(value)
-
-prev_file = "guild_highscores_previous.json"
-prev_file = path(prev_file)
-
-if os.path.exists(prev_file):
-    with open(prev_file, "r", encoding="utf-8") as f:
-        prev_data = json.load(f)
-    prev_points = {m['name']: m['points'] for m in prev_data}
-
-
-
-highstcores = [
+[
     {
         "name": "Piolho De Gabine",
         "vocation": "Elite Knight",
-        "level": 1274,
-        "points": 34335330684,
+        "level": 1275,
+        "points": 34405923514,
         "profession": "Knight",
         "rank_in_highscore": 16,
-        "xp_gained": 54147895
+        "xp_gained": 70592830
     },
     {
         "name": "Flamel Fullfarm",
         "vocation": "Elite Knight",
-        "level": 1153,
-        "points": 25462260364,
+        "level": 1154,
+        "points": 25498295148,
         "profession": "Knight",
         "rank_in_highscore": 27,
-        "xp_gained": 34996247
+        "xp_gained": 36034784
     },
     {
         "name": "Hiki ko Mori",
@@ -75,11 +38,20 @@ highstcores = [
     {
         "name": "Eutanasio Metamota",
         "vocation": "Elite Knight",
-        "level": 650,
-        "points": 4541441876,
+        "level": 651,
+        "points": 4559878140,
         "profession": "Knight",
-        "rank_in_highscore": 184,
-        "xp_gained": 4263371
+        "rank_in_highscore": 183,
+        "xp_gained": 18436264
+    },
+    {
+        "name": "Knight Goiiano",
+        "vocation": "Elite Knight",
+        "level": 615,
+        "points": 3852340231,
+        "profession": "Knight",
+        "rank_in_highscore": 206,
+        "xp_gained": 0
     },
     {
         "name": "Guig Tankatudo",
@@ -87,17 +59,26 @@ highstcores = [
         "level": 558,
         "points": 2877146351,
         "profession": "Knight",
-        "rank_in_highscore": 251,
+        "rank_in_highscore": 252,
         "xp_gained": 0
     },
     {
         "name": "Cassador de Galinha",
         "vocation": "Elite Knight",
         "level": 557,
-        "points": 2852119257,
+        "points": 2852735215,
         "profession": "Knight",
         "rank_in_highscore": 258,
-        "xp_gained": 0
+        "xp_gained": 615958
+    },
+    {
+        "name": "Alsakad Metted",
+        "vocation": "Elite Knight",
+        "level": 538,
+        "points": 2569600390,
+        "profession": "Knight",
+        "rank_in_highscore": 279,
+        "xp_gained": 11610542
     },
     {
         "name": "Weero Palmaa",
@@ -105,17 +86,8 @@ highstcores = [
         "level": 537,
         "points": 2559561477,
         "profession": "Knight",
-        "rank_in_highscore": 279,
+        "rank_in_highscore": 281,
         "xp_gained": 0
-    },
-    {
-        "name": "Alsakad Metted",
-        "vocation": "Elite Knight",
-        "level": 537,
-        "points": 2557989848,
-        "profession": "Knight",
-        "rank_in_highscore": 280,
-        "xp_gained": 7535303
     },
     {
         "name": "Main do Nata",
@@ -123,7 +95,7 @@ highstcores = [
         "level": 489,
         "points": 1930932420,
         "profession": "Knight",
-        "rank_in_highscore": 345,
+        "rank_in_highscore": 346,
         "xp_gained": 0
     },
     {
@@ -132,17 +104,17 @@ highstcores = [
         "level": 478,
         "points": 1798797816,
         "profession": "Knight",
-        "rank_in_highscore": 365,
+        "rank_in_highscore": 366,
         "xp_gained": 0
     },
     {
         "name": "Deseoth",
         "vocation": "Elite Knight",
         "level": 442,
-        "points": 1428381943,
+        "points": 1428711644,
         "profession": "Knight",
-        "rank_in_highscore": 427,
-        "xp_gained": 6623070
+        "rank_in_highscore": 428,
+        "xp_gained": 329701
     },
     {
         "name": "Kniight Of Holly",
@@ -150,17 +122,17 @@ highstcores = [
         "level": 430,
         "points": 1315010744,
         "profession": "Knight",
-        "rank_in_highscore": 446,
+        "rank_in_highscore": 447,
         "xp_gained": 0
     },
     {
         "name": "Umuboo Gaifeidital",
         "vocation": "Elite Knight",
         "level": 426,
-        "points": 1274076339,
+        "points": 1275205474,
         "profession": "Knight",
-        "rank_in_highscore": 454,
-        "xp_gained": 493871
+        "rank_in_highscore": 455,
+        "xp_gained": 1129135
     },
     {
         "name": "Brop",
@@ -168,7 +140,7 @@ highstcores = [
         "level": 397,
         "points": 1032783485,
         "profession": "Knight",
-        "rank_in_highscore": 502,
+        "rank_in_highscore": 503,
         "xp_gained": 0
     },
     {
@@ -177,17 +149,17 @@ highstcores = [
         "level": 396,
         "points": 1022594435,
         "profession": "Knight",
-        "rank_in_highscore": 504,
+        "rank_in_highscore": 505,
         "xp_gained": 0
     },
     {
         "name": "Jaozlayer",
         "vocation": "Elite Knight",
-        "level": 386,
-        "points": 947325893,
+        "level": 387,
+        "points": 957747309,
         "profession": "Knight",
         "rank_in_highscore": 516,
-        "xp_gained": 73633
+        "xp_gained": 10421416
     },
     {
         "name": "Skyline Rushz",
@@ -195,7 +167,7 @@ highstcores = [
         "level": 375,
         "points": 868376120,
         "profession": "Knight",
-        "rank_in_highscore": 534,
+        "rank_in_highscore": 535,
         "xp_gained": 0
     },
     {
@@ -204,17 +176,17 @@ highstcores = [
         "level": 359,
         "points": 763119508,
         "profession": "Knight",
-        "rank_in_highscore": 564,
+        "rank_in_highscore": 565,
         "xp_gained": 0
     },
     {
         "name": "Bruto Monstrao",
         "vocation": "Elite Knight",
         "level": 355,
-        "points": 737682370,
+        "points": 737682437,
         "profession": "Knight",
-        "rank_in_highscore": 570,
-        "xp_gained": 0
+        "rank_in_highscore": 571,
+        "xp_gained": 67
     },
     {
         "name": "Thor Tedras",
@@ -222,7 +194,7 @@ highstcores = [
         "level": 349,
         "points": 697791242,
         "profession": "Knight",
-        "rank_in_highscore": 584,
+        "rank_in_highscore": 585,
         "xp_gained": 0
     },
     {
@@ -231,7 +203,7 @@ highstcores = [
         "level": 346,
         "points": 678870166,
         "profession": "Knight",
-        "rank_in_highscore": 590,
+        "rank_in_highscore": 591,
         "xp_gained": 0
     },
     {
@@ -240,26 +212,26 @@ highstcores = [
         "level": 340,
         "points": 646324484,
         "profession": "Knight",
-        "rank_in_highscore": 609,
+        "rank_in_highscore": 610,
         "xp_gained": 0
     },
     {
         "name": "Fidiaszek The Witcher",
         "vocation": "Elite Knight",
         "level": 335,
-        "points": 619877805,
+        "points": 619921476,
         "profession": "Knight",
-        "rank_in_highscore": 618,
-        "xp_gained": 40994
+        "rank_in_highscore": 619,
+        "xp_gained": 43671
     },
     {
         "name": "Nononono",
         "vocation": "Elite Knight",
         "level": 332,
-        "points": 600624503,
+        "points": 602973499,
         "profession": "Knight",
-        "rank_in_highscore": 629,
-        "xp_gained": 1273224
+        "rank_in_highscore": 627,
+        "xp_gained": 2348996
     },
     {
         "name": "Yasuoprata",
@@ -267,7 +239,7 @@ highstcores = [
         "level": 321,
         "points": 543337654,
         "profession": "Knight",
-        "rank_in_highscore": 660,
+        "rank_in_highscore": 661,
         "xp_gained": 0
     },
     {
@@ -276,7 +248,7 @@ highstcores = [
         "level": 303,
         "points": 455135400,
         "profession": "Knight",
-        "rank_in_highscore": 728,
+        "rank_in_highscore": 729,
         "xp_gained": 0
     },
     {
@@ -285,7 +257,7 @@ highstcores = [
         "level": 298,
         "points": 433161353,
         "profession": "Knight",
-        "rank_in_highscore": 744,
+        "rank_in_highscore": 746,
         "xp_gained": 0
     },
     {
@@ -294,7 +266,7 @@ highstcores = [
         "level": 290,
         "points": 399321530,
         "profession": "Knight",
-        "rank_in_highscore": 765,
+        "rank_in_highscore": 767,
         "xp_gained": 0
     },
     {
@@ -303,17 +275,17 @@ highstcores = [
         "level": 288,
         "points": 393259297,
         "profession": "Knight",
-        "rank_in_highscore": 771,
+        "rank_in_highscore": 772,
         "xp_gained": 0
     },
     {
         "name": "Max Soberanoooo",
         "vocation": "Elite Knight",
-        "level": 283,
-        "points": 373586206,
+        "level": 284,
+        "points": 375384654,
         "profession": "Knight",
         "rank_in_highscore": 789,
-        "xp_gained": 2511423
+        "xp_gained": 1798448
     },
     {
         "name": "Alumbra Knight",
@@ -321,7 +293,7 @@ highstcores = [
         "level": 282,
         "points": 369533396,
         "profession": "Knight",
-        "rank_in_highscore": 794,
+        "rank_in_highscore": 796,
         "xp_gained": 0
     },
     {
@@ -330,7 +302,7 @@ highstcores = [
         "level": 281,
         "points": 362723408,
         "profession": "Knight",
-        "rank_in_highscore": 802,
+        "rank_in_highscore": 803,
         "xp_gained": 0
     },
     {
@@ -339,7 +311,7 @@ highstcores = [
         "level": 275,
         "points": 339881331,
         "profession": "Knight",
-        "rank_in_highscore": 821,
+        "rank_in_highscore": 823,
         "xp_gained": 0
     },
     {
@@ -348,7 +320,7 @@ highstcores = [
         "level": 273,
         "points": 332792195,
         "profession": "Knight",
-        "rank_in_highscore": 831,
+        "rank_in_highscore": 832,
         "xp_gained": 0
     },
     {
@@ -357,7 +329,7 @@ highstcores = [
         "level": 265,
         "points": 305396291,
         "profession": "Knight",
-        "rank_in_highscore": 864,
+        "rank_in_highscore": 865,
         "xp_gained": 0
     },
     {
@@ -366,7 +338,7 @@ highstcores = [
         "level": 264,
         "points": 300978362,
         "profession": "Knight",
-        "rank_in_highscore": 871,
+        "rank_in_highscore": 873,
         "xp_gained": 0
     },
     {
@@ -375,7 +347,7 @@ highstcores = [
         "level": 258,
         "points": 279758778,
         "profession": "Knight",
-        "rank_in_highscore": 892,
+        "rank_in_highscore": 893,
         "xp_gained": 0
     },
     {
@@ -384,7 +356,7 @@ highstcores = [
         "level": 243,
         "points": 234420003,
         "profession": "Knight",
-        "rank_in_highscore": 945,
+        "rank_in_highscore": 947,
         "xp_gained": 0
     },
     {
@@ -393,17 +365,17 @@ highstcores = [
         "level": 239,
         "points": 223286979,
         "profession": "Knight",
-        "rank_in_highscore": 960,
+        "rank_in_highscore": 961,
         "xp_gained": 0
     },
     {
         "name": "Arthero",
         "vocation": "Elite Knight",
         "level": 236,
-        "points": 214765703,
+        "points": 214765715,
         "profession": "Knight",
-        "rank_in_highscore": 977,
-        "xp_gained": 0
+        "rank_in_highscore": 978,
+        "xp_gained": 12
     },
     {
         "name": "Eltozerahh",
@@ -411,7 +383,7 @@ highstcores = [
         "level": 234,
         "points": 209641494,
         "profession": "Knight",
-        "rank_in_highscore": 985,
+        "rank_in_highscore": 986,
         "xp_gained": 0
     },
     {
@@ -420,7 +392,7 @@ highstcores = [
         "level": 234,
         "points": 208932350,
         "profession": "Knight",
-        "rank_in_highscore": 986,
+        "rank_in_highscore": 987,
         "xp_gained": 0
     },
     {
@@ -429,7 +401,7 @@ highstcores = [
         "level": 232,
         "points": 204695699,
         "profession": "Knight",
-        "rank_in_highscore": 992,
+        "rank_in_highscore": 994,
         "xp_gained": 0
     },
     {
@@ -438,7 +410,7 @@ highstcores = [
         "level": 232,
         "points": 203877803,
         "profession": "Knight",
-        "rank_in_highscore": 994,
+        "rank_in_highscore": 996,
         "xp_gained": 0
     },
     {
@@ -453,11 +425,11 @@ highstcores = [
     {
         "name": "Krusty Psychotic",
         "vocation": "Royal Paladin",
-        "level": 495,
-        "points": 2004727274,
+        "level": 494,
+        "points": 1996070462,
         "profession": "Paladin",
         "rank_in_highscore": 191,
-        "xp_gained": 6397223
+        "xp_gained": -8656812
     },
     {
         "name": "Espeto Misto",
@@ -465,8 +437,8 @@ highstcores = [
         "level": 490,
         "points": 1946043365,
         "profession": "Paladin",
-        "rank_in_highscore": 194,
-        "xp_gained": 159720
+        "rank_in_highscore": 193,
+        "xp_gained": 0
     },
     {
         "name": "Xfected",
@@ -474,7 +446,7 @@ highstcores = [
         "level": 459,
         "points": 1600729687,
         "profession": "Paladin",
-        "rank_in_highscore": 227,
+        "rank_in_highscore": 226,
         "xp_gained": 0
     },
     {
@@ -483,7 +455,7 @@ highstcores = [
         "level": 450,
         "points": 1505364105,
         "profession": "Paladin",
-        "rank_in_highscore": 234,
+        "rank_in_highscore": 233,
         "xp_gained": 0
     },
     {
@@ -507,11 +479,11 @@ highstcores = [
     {
         "name": "Mana All",
         "vocation": "Royal Paladin",
-        "level": 363,
-        "points": 789187599,
+        "level": 364,
+        "points": 791178750,
         "profession": "Paladin",
         "rank_in_highscore": 359,
-        "xp_gained": 3053653
+        "xp_gained": 1991151
     },
     {
         "name": "Nando Boltada",
@@ -519,26 +491,26 @@ highstcores = [
         "level": 363,
         "points": 787304368,
         "profession": "Paladin",
-        "rank_in_highscore": 360,
+        "rank_in_highscore": 361,
         "xp_gained": 0
     },
     {
         "name": "Jauan The Archer",
         "vocation": "Royal Paladin",
         "level": 323,
-        "points": 553893214,
+        "points": 554748619,
         "profession": "Paladin",
-        "rank_in_highscore": 438,
-        "xp_gained": 10490212
+        "rank_in_highscore": 437,
+        "xp_gained": 855405
     },
     {
         "name": "Android Four",
         "vocation": "Royal Paladin",
-        "level": 308,
-        "points": 479176570,
+        "level": 311,
+        "points": 493806186,
         "profession": "Paladin",
-        "rank_in_highscore": 468,
-        "xp_gained": 2593800
+        "rank_in_highscore": 465,
+        "xp_gained": 14629616
     },
     {
         "name": "Gothitelle",
@@ -597,11 +569,11 @@ highstcores = [
     {
         "name": "Peixe Feliz",
         "vocation": "Royal Paladin",
-        "level": 291,
-        "points": 406016418,
+        "level": 292,
+        "points": 408959611,
         "profession": "Paladin",
-        "rank_in_highscore": 507,
-        "xp_gained": 3537762
+        "rank_in_highscore": 506,
+        "xp_gained": 2943193
     },
     {
         "name": "Will Skyfal",
@@ -663,7 +635,7 @@ highstcores = [
         "level": 245,
         "points": 239260658,
         "profession": "Paladin",
-        "rank_in_highscore": 692,
+        "rank_in_highscore": 693,
         "xp_gained": 0
     },
     {
@@ -672,7 +644,7 @@ highstcores = [
         "level": 244,
         "points": 236324969,
         "profession": "Paladin",
-        "rank_in_highscore": 694,
+        "rank_in_highscore": 695,
         "xp_gained": 0
     },
     {
@@ -681,17 +653,17 @@ highstcores = [
         "level": 243,
         "points": 235982756,
         "profession": "Paladin",
-        "rank_in_highscore": 695,
+        "rank_in_highscore": 696,
         "xp_gained": 0
     },
     {
         "name": "Yaakov Zimmermann",
         "vocation": "Paladin",
         "level": 242,
-        "points": 232296695,
+        "points": 232297085,
         "profession": "Paladin",
         "rank_in_highscore": 700,
-        "xp_gained": 18937
+        "xp_gained": 390
     },
     {
         "name": "Dobow",
@@ -744,7 +716,7 @@ highstcores = [
         "level": 205,
         "points": 139537190,
         "profession": "Paladin",
-        "rank_in_highscore": 875,
+        "rank_in_highscore": 878,
         "xp_gained": 0
     },
     {
@@ -771,7 +743,7 @@ highstcores = [
         "level": 188,
         "points": 107284192,
         "profession": "Paladin",
-        "rank_in_highscore": 989,
+        "rank_in_highscore": 990,
         "xp_gained": 0
     },
     {
@@ -798,17 +770,17 @@ highstcores = [
         "level": 613,
         "points": 3819201725,
         "profession": "Sorcerer",
-        "rank_in_highscore": 94,
-        "xp_gained": 34083
+        "rank_in_highscore": 95,
+        "xp_gained": 0
     },
     {
         "name": "Illich Polvo",
         "vocation": "Master Sorcerer",
         "level": 588,
-        "points": 3357779583,
+        "points": 3359955473,
         "profession": "Sorcerer",
-        "rank_in_highscore": 100,
-        "xp_gained": 90
+        "rank_in_highscore": 101,
+        "xp_gained": 2175890
     },
     {
         "name": "Feanor Mage",
@@ -816,7 +788,7 @@ highstcores = [
         "level": 338,
         "points": 632710338,
         "profession": "Sorcerer",
-        "rank_in_highscore": 249,
+        "rank_in_highscore": 250,
         "xp_gained": 0
     },
     {
@@ -825,7 +797,7 @@ highstcores = [
         "level": 330,
         "points": 590637304,
         "profession": "Sorcerer",
-        "rank_in_highscore": 264,
+        "rank_in_highscore": 265,
         "xp_gained": 0
     },
     {
@@ -834,7 +806,7 @@ highstcores = [
         "level": 292,
         "points": 410462184,
         "profession": "Sorcerer",
-        "rank_in_highscore": 349,
+        "rank_in_highscore": 350,
         "xp_gained": 0
     },
     {
@@ -843,7 +815,7 @@ highstcores = [
         "level": 289,
         "points": 397210178,
         "profession": "Sorcerer",
-        "rank_in_highscore": 357,
+        "rank_in_highscore": 358,
         "xp_gained": 0
     },
     {
@@ -852,7 +824,7 @@ highstcores = [
         "level": 289,
         "points": 394226368,
         "profession": "Sorcerer",
-        "rank_in_highscore": 361,
+        "rank_in_highscore": 362,
         "xp_gained": 0
     },
     {
@@ -861,7 +833,7 @@ highstcores = [
         "level": 270,
         "points": 321288501,
         "profession": "Sorcerer",
-        "rank_in_highscore": 402,
+        "rank_in_highscore": 403,
         "xp_gained": 0
     },
     {
@@ -870,7 +842,7 @@ highstcores = [
         "level": 264,
         "points": 301521026,
         "profession": "Sorcerer",
-        "rank_in_highscore": 414,
+        "rank_in_highscore": 415,
         "xp_gained": 0
     },
     {
@@ -879,17 +851,17 @@ highstcores = [
         "level": 261,
         "points": 290033090,
         "profession": "Sorcerer",
-        "rank_in_highscore": 428,
+        "rank_in_highscore": 429,
         "xp_gained": 0
     },
     {
         "name": "Jandso",
         "vocation": "Master Sorcerer",
-        "level": 257,
-        "points": 277048355,
+        "level": 260,
+        "points": 287825279,
         "profession": "Sorcerer",
-        "rank_in_highscore": 444,
-        "xp_gained": 315786
+        "rank_in_highscore": 432,
+        "xp_gained": 10776924
     },
     {
         "name": "Maniiiacoo",
@@ -897,7 +869,7 @@ highstcores = [
         "level": 248,
         "points": 249249824,
         "profession": "Sorcerer",
-        "rank_in_highscore": 470,
+        "rank_in_highscore": 471,
         "xp_gained": 0
     },
     {
@@ -906,7 +878,7 @@ highstcores = [
         "level": 236,
         "points": 214610447,
         "profession": "Sorcerer",
-        "rank_in_highscore": 509,
+        "rank_in_highscore": 510,
         "xp_gained": 0
     },
     {
@@ -915,7 +887,7 @@ highstcores = [
         "level": 221,
         "points": 176872827,
         "profession": "Sorcerer",
-        "rank_in_highscore": 559,
+        "rank_in_highscore": 560,
         "xp_gained": 0
     },
     {
@@ -924,7 +896,7 @@ highstcores = [
         "level": 211,
         "points": 154131188,
         "profession": "Sorcerer",
-        "rank_in_highscore": 599,
+        "rank_in_highscore": 600,
         "xp_gained": 0
     },
     {
@@ -933,17 +905,17 @@ highstcores = [
         "level": 209,
         "points": 148702052,
         "profession": "Sorcerer",
-        "rank_in_highscore": 614,
+        "rank_in_highscore": 615,
         "xp_gained": 0
     },
     {
         "name": "Doutor Boladao",
         "vocation": "Master Sorcerer",
         "level": 182,
-        "points": 98623654,
+        "points": 98699424,
         "profession": "Sorcerer",
-        "rank_in_highscore": 745,
-        "xp_gained": 115288
+        "rank_in_highscore": 746,
+        "xp_gained": 75770
     },
     {
         "name": "Vitrak",
@@ -951,7 +923,7 @@ highstcores = [
         "level": 182,
         "points": 97866661,
         "profession": "Sorcerer",
-        "rank_in_highscore": 747,
+        "rank_in_highscore": 748,
         "xp_gained": 0
     },
     {
@@ -960,7 +932,7 @@ highstcores = [
         "level": 181,
         "points": 95791853,
         "profession": "Sorcerer",
-        "rank_in_highscore": 757,
+        "rank_in_highscore": 759,
         "xp_gained": 0
     },
     {
@@ -969,21 +941,21 @@ highstcores = [
         "level": 162,
         "points": 68761397,
         "profession": "Sorcerer",
-        "rank_in_highscore": 923,
+        "rank_in_highscore": 924,
         "xp_gained": 0
     },
     {
         "name": "Seo Miguel",
         "vocation": "Elder Druid",
         "level": 1083,
-        "points": 21057633662,
+        "points": 21061310875,
         "profession": "Druid",
         "rank_in_highscore": 26,
-        "xp_gained": 938342
+        "xp_gained": 3677213
     },
     {
         "name": "Dojets",
-        "vocation": "Elder Druid",
+        "vocation": "Druid",
         "level": 641,
         "points": 4359104962,
         "profession": "Druid",
@@ -994,19 +966,19 @@ highstcores = [
         "name": "Buduba",
         "vocation": "Elder Druid",
         "level": 627,
-        "points": 4074046072,
+        "points": 4075084407,
         "profession": "Druid",
-        "rank_in_highscore": 113,
-        "xp_gained": 672497
+        "rank_in_highscore": 114,
+        "xp_gained": 1038335
     },
     {
         "name": "Kierlord",
         "vocation": "Elder Druid",
         "level": 455,
-        "points": 1555352360,
+        "points": 1555431329,
         "profession": "Druid",
-        "rank_in_highscore": 228,
-        "xp_gained": 38496
+        "rank_in_highscore": 226,
+        "xp_gained": 78969
     },
     {
         "name": "Frontin",
@@ -1014,7 +986,7 @@ highstcores = [
         "level": 357,
         "points": 745823860,
         "profession": "Druid",
-        "rank_in_highscore": 341,
+        "rank_in_highscore": 338,
         "xp_gained": 0
     },
     {
@@ -1023,8 +995,8 @@ highstcores = [
         "level": 353,
         "points": 721229062,
         "profession": "Druid",
-        "rank_in_highscore": 348,
-        "xp_gained": 404438
+        "rank_in_highscore": 346,
+        "xp_gained": 0
     },
     {
         "name": "Boriiszada",
@@ -1032,7 +1004,7 @@ highstcores = [
         "level": 301,
         "points": 448567986,
         "profession": "Druid",
-        "rank_in_highscore": 475,
+        "rank_in_highscore": 472,
         "xp_gained": 0
     },
     {
@@ -1041,7 +1013,7 @@ highstcores = [
         "level": 269,
         "points": 317273192,
         "profession": "Druid",
-        "rank_in_highscore": 570,
+        "rank_in_highscore": 567,
         "xp_gained": 0
     },
     {
@@ -1050,7 +1022,7 @@ highstcores = [
         "level": 262,
         "points": 293616469,
         "profession": "Druid",
-        "rank_in_highscore": 595,
+        "rank_in_highscore": 593,
         "xp_gained": 0
     },
     {
@@ -1059,7 +1031,7 @@ highstcores = [
         "level": 261,
         "points": 289750355,
         "profession": "Druid",
-        "rank_in_highscore": 599,
+        "rank_in_highscore": 598,
         "xp_gained": 0
     },
     {
@@ -1068,7 +1040,7 @@ highstcores = [
         "level": 259,
         "points": 285271415,
         "profession": "Druid",
-        "rank_in_highscore": 603,
+        "rank_in_highscore": 601,
         "xp_gained": 0
     },
     {
@@ -1077,17 +1049,17 @@ highstcores = [
         "level": 239,
         "points": 223893296,
         "profession": "Druid",
-        "rank_in_highscore": 679,
+        "rank_in_highscore": 676,
         "xp_gained": 0
     },
     {
         "name": "Jaguarack",
         "vocation": "Elder Druid",
-        "level": 231,
-        "points": 202373578,
+        "level": 234,
+        "points": 208201252,
         "profession": "Druid",
-        "rank_in_highscore": 705,
-        "xp_gained": 2177010
+        "rank_in_highscore": 697,
+        "xp_gained": 5827674
     },
     {
         "name": "Rifastacio",
@@ -1095,7 +1067,7 @@ highstcores = [
         "level": 230,
         "points": 197761862,
         "profession": "Druid",
-        "rank_in_highscore": 714,
+        "rank_in_highscore": 710,
         "xp_gained": 0
     },
     {
@@ -1104,7 +1076,7 @@ highstcores = [
         "level": 219,
         "points": 170558019,
         "profession": "Druid",
-        "rank_in_highscore": 754,
+        "rank_in_highscore": 752,
         "xp_gained": 0
     },
     {
@@ -1113,7 +1085,7 @@ highstcores = [
         "level": 208,
         "points": 147429779,
         "profession": "Druid",
-        "rank_in_highscore": 798,
+        "rank_in_highscore": 794,
         "xp_gained": 0
     },
     {
@@ -1122,7 +1094,7 @@ highstcores = [
         "level": 208,
         "points": 147333039,
         "profession": "Druid",
-        "rank_in_highscore": 799,
+        "rank_in_highscore": 795,
         "xp_gained": 0
     },
     {
@@ -1131,17 +1103,17 @@ highstcores = [
         "level": 204,
         "points": 138182896,
         "profession": "Druid",
-        "rank_in_highscore": 816,
+        "rank_in_highscore": 812,
         "xp_gained": 0
     },
     {
         "name": "Mago Maau",
         "vocation": "Elder Druid",
         "level": 189,
-        "points": 109144145,
+        "points": 109330928,
         "profession": "Druid",
-        "rank_in_highscore": 910,
-        "xp_gained": 823917
+        "rank_in_highscore": 906,
+        "xp_gained": 186783
     },
     {
         "name": "Medichal Bianor",
@@ -1149,26 +1121,26 @@ highstcores = [
         "level": 182,
         "points": 98093330,
         "profession": "Druid",
-        "rank_in_highscore": 944,
+        "rank_in_highscore": 940,
         "xp_gained": 0
     },
     {
         "name": "Pesadelow",
         "vocation": "Exalted Monk",
-        "level": 481,
-        "points": 1839481881,
+        "level": 483,
+        "points": 1858834560,
         "profession": "Monk",
-        "rank_in_highscore": 11,
-        "xp_gained": 6211099
+        "rank_in_highscore": 10,
+        "xp_gained": 19352679
     },
     {
         "name": "An Ge Lus",
         "vocation": "Exalted Monk",
-        "level": 306,
-        "points": 472220925,
+        "level": 307,
+        "points": 476552173,
         "profession": "Monk",
         "rank_in_highscore": 44,
-        "xp_gained": 5482165
+        "xp_gained": 4331248
     },
     {
         "name": "Mchelvar Melvarn",
@@ -1182,11 +1154,11 @@ highstcores = [
     {
         "name": "Bede Griffiths",
         "vocation": "Exalted Monk",
-        "level": 273,
-        "points": 334736591,
+        "level": 275,
+        "points": 339803288,
         "profession": "Monk",
         "rank_in_highscore": 55,
-        "xp_gained": 5698462
+        "xp_gained": 5066697
     },
     {
         "name": "Djebe Direto",
@@ -1194,17 +1166,17 @@ highstcores = [
         "level": 210,
         "points": 150141448,
         "profession": "Monk",
-        "rank_in_highscore": 85,
+        "rank_in_highscore": 86,
         "xp_gained": 0
     },
     {
         "name": "Queimou Virou Historia",
         "vocation": "Exalted Monk",
-        "level": 206,
-        "points": 143468181,
+        "level": 207,
+        "points": 143732276,
         "profession": "Monk",
         "rank_in_highscore": 88,
-        "xp_gained": 336751
+        "xp_gained": 264095
     },
     {
         "name": "Lanix Drax",
@@ -1213,7 +1185,7 @@ highstcores = [
         "points": 133583767,
         "profession": "Monk",
         "rank_in_highscore": 90,
-        "xp_gained": 907152
+        "xp_gained": 0
     },
     {
         "name": "Bao de Mao",
@@ -1227,11 +1199,11 @@ highstcores = [
     {
         "name": "Exidy Fulldamage",
         "vocation": "Exalted Monk",
-        "level": 158,
-        "points": 63553162,
+        "level": 160,
+        "points": 66538671,
         "profession": "Monk",
-        "rank_in_highscore": 111,
-        "xp_gained": 227709
+        "rank_in_highscore": 110,
+        "xp_gained": 2985509
     },
     {
         "name": "Padre Urso",
@@ -1266,7 +1238,7 @@ highstcores = [
         "level": 100,
         "points": 15714986,
         "profession": "Monk",
-        "rank_in_highscore": 180,
+        "rank_in_highscore": 181,
         "xp_gained": 0
     },
     {
@@ -1302,7 +1274,7 @@ highstcores = [
         "level": 31,
         "points": 433756,
         "profession": "Monk",
-        "rank_in_highscore": 444,
+        "rank_in_highscore": 446,
         "xp_gained": 0
     },
     {
@@ -1311,7 +1283,7 @@ highstcores = [
         "level": 30,
         "points": 373811,
         "profession": "Monk",
-        "rank_in_highscore": 459,
+        "rank_in_highscore": 461,
         "xp_gained": 0
     },
     {
@@ -1333,54 +1305,3 @@ highstcores = [
         "xp_gained": 0
     }
 ]
-highscores_sorted = sorted(highstcores, key=lambda x: x['xp_gained'], reverse=True)
-
-# Limitar top 20
-top_20_highscores = highscores_sorted[:20]
-
-
-driver_path = r"C:\Users\Cristian\Desktop\edgeSel\msedgedriver.exe"
-service = Service(driver_path)
-
-# Configurações do Edge
-options = webdriver.EdgeOptions()
-options.use_chromium = True
-options.add_argument(r"user-data-dir=C:\Users\Cristian\AppData\Local\Microsoft\Edge\User Data")
-
-# Inicializa o driver
-driver = webdriver.Edge(service=service, options=options)
-
-# Abre WhatsApp Web
-driver.get("https://web.whatsapp.com")
-time.sleep(10)  # espera abrir o WhatsApp
-# Nome do grupo ou contato
-grupo_nome = "Eu Mesmo Eu (você)"
-
-# Gera a mensagem automaticamente a partir do top 20
-yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
-mensagem = (
-    f"Top 20 XP diário - Abrigo de Mendigo - {yesterday_str}\n"
-)
-for i, member in enumerate(top_20_highscores, start=1):
-    xp_gained = format_xp(member['xp_gained'])
-    mensagem += f"\u200b{i}. {member['name']} - Lv {member['level']} - {xp_gained}\n"
-
-mensagem += f"\n_Última Atualização Tibia: 05:40_\n\n"
-
-# Procurar o grupo pelo nome
-search_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="3"]')
-search_box.click()
-search_box.send_keys(grupo_nome)
-time.sleep(2)
-search_box.send_keys(Keys.ENTER)
-
-# Selecionar a caixa de texto da mensagem
-message_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="10"]')
-message_box.click()
-for line in mensagem.split("\n"):
-    message_box.send_keys(line)
-    ActionChains(driver).key_down(Keys.SHIFT).send_keys(Keys.ENTER).key_up(Keys.SHIFT).perform()
-message_box.send_keys(Keys.ENTER)
-
-print("Mensagem enviada!")
-time.sleep(5)

@@ -16,6 +16,10 @@ import os
 # -------------------------------
 # Funções auxiliares
 # -------------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+def path(filename):
+    return os.path.join(BASE_DIR, filename)
+
 def clean_text(text):
     """Remove espaços extras e caracteres não quebráveis"""
     return text.replace('\xa0', ' ').strip()
@@ -81,7 +85,7 @@ guild_member_names_normalized = set(normalize_name(m['name_and_title'].split(' (
 
 # Salvar me-+*0mbros da guild em Excel
 df_members = pd.DataFrame(members)
-df_members.to_excel("guild_members.xlsx", index=False)
+df_members.to_excel(path("guild_members.xlsx"), index=False)
 print("Arquivo 'guild_members.xlsx' criado com sucesso!")
 
 # -------------------------------
@@ -141,25 +145,27 @@ for prof_id, prof_name in professions.items():
 # -------------------------------
 # 3) Calcular XP ganho diário
 # -------------------------------
-# Arquivo base (última execução)
-prev_file = "guild_highscores_previous.json"
 
 # Arquivo histórico (com data)
-today_str = datetime.now().strftime("%Y_%m_%d")
-daily_file = f"guild_highscores_previous_{today_str}.json"
+yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%Y_%m_%d")
+yesterday_file = path(f"guild_highscores_previous_{yesterday_str}.json")
 
 # Carregar pontos do dia anterior se existir
-if os.path.exists(prev_file):
-    with open(prev_file, "r", encoding="utf-8") as f:
+if os.path.exists(yesterday_file):
+    with open(yesterday_file, "r", encoding="utf-8") as f:
         prev_data = json.load(f)
     prev_points = {m['name']: m['points'] for m in prev_data}
 else:
     prev_points = {}
 
-
 for member in highscores:
     previous = prev_points.get(member['name'], 0)
-    member['xp_gained'] = member['points'] - previous
+    xp_gained = member['points'] - previous
+
+    if xp_gained == member['points']:
+        xp_gained = 0
+
+    member['xp_gained'] = xp_gained
 
 # Ordenar pelo XP ganho
 highscores_sorted = sorted(highscores, key=lambda x: x['xp_gained'], reverse=True)
@@ -170,12 +176,11 @@ top_20_highscores = highscores_sorted[:20]
 # -------------------------------
 # 4) Salvar resultados
 # -------------------------------
-try:
-    # # Atualiza o arquivo "última execução"
-    # with open(prev_file, "w", encoding="utf-8") as f:
-    #     json.dump(highscores, f, ensure_ascii=False, indent=4)
+today_str = datetime.now().strftime("%Y_%m_%d")
+daily_file = path(f"guild_highscores_previous_{today_str}.json")
 
-    # Salva também o arquivo histórico do dia
+try:
+    # Salva o arquivo histórico do dia
     with open(daily_file, "w", encoding="utf-8") as f:
         json.dump(highscores, f, ensure_ascii=False, indent=4)
     print(f"Arquivos '{daily_file}' salvo com sucesso!")
