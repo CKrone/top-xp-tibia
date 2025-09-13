@@ -205,7 +205,7 @@ driver = webdriver.Edge(service=service, options=options)
 driver.get("https://web.whatsapp.com")
 time.sleep(10)  # espera abrir o WhatsApp
 # Nome do grupo ou contato
-grupo_nome = "Eu Mesmo Eu (você)"
+grupo_nome = "Abrigo de mendigos"
 
 # Gera a mensagem automaticamente a partir do top 20
 yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
