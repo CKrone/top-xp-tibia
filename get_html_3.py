@@ -234,7 +234,7 @@ for line in mensagem.split("\n"):
 message_box.send_keys(Keys.ENTER)
 
 print("Mensagem enviada!")
-time.sleep(5)
+time.sleep(10)
 
 # Fecha o navegador
 driver.quit()
