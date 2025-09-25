@@ -2,7 +2,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
+from supabase import create_client, Client
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -12,6 +13,10 @@ import json
 import math
 import time
 import os
+
+url = "https://ghxlnvyoxhacwsevsfws.supabase.co"
+key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoeGxudnlveGhhY3dzZXZzZndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI3NTE5MzcsImV4cCI6MjA1ODMyNzkzN30.FdyNtQuczgV-_9P--1XaEaIVujNfBaDBR6vGmbZwLEo"
+supabase: Client = create_client(url, key)
 
 # -------------------------------
 # Funções auxiliares
@@ -234,7 +239,12 @@ for line in mensagem.split("\n"):
 message_box.send_keys(Keys.ENTER)
 
 print("Mensagem enviada!")
-time.sleep(10)
+time.sleep(15)
 
 # Fecha o navegador
 driver.quit()
+
+yesterday = (date.today() - timedelta(days=1)).isoformat()
+for player in top_20_highscores:
+    player["day"] = yesterday
+response = supabase.table("top_xp_diario_tibia").insert(top_20_highscores).execute()
