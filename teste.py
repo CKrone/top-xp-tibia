@@ -2,7 +2,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from selenium import webdriver
 from supabase import create_client, Client
 import time
@@ -11,9 +11,9 @@ import json
 import os
 
 
-url = "https://ghxlnvyoxhacwsevsfws.supabase.co"
-key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoeGxudnlveGhhY3dzZXZzZndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI3NTE5MzcsImV4cCI6MjA1ODMyNzkzN30.FdyNtQuczgV-_9P--1XaEaIVujNfBaDBR6vGmbZwLEo"
-supabase: Client = create_client(url, key)
+# url = "https://ghxlnvyoxhacwsevsfws.supabase.co"
+# key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoeGxudnlveGhhY3dzZXZzZndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI3NTE5MzcsImV4cCI6MjA1ODMyNzkzN30.FdyNtQuczgV-_9P--1XaEaIVujNfBaDBR6vGmbZwLEo"
+# supabase: Client = create_client(url, key)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -38,8 +38,6 @@ if os.path.exists(prev_file):
     with open(prev_file, "r", encoding="utf-8") as f:
         prev_data = json.load(f)
     prev_points = {m['name']: m['points'] for m in prev_data}
-
-
 
 highstcores = [
     {
@@ -1339,6 +1337,11 @@ highstcores = [
         "xp_gained": 0
     }
 ]
+totalXpGuild = 0
+for player in highstcores:
+    totalXpGuild += player["xp_gained"]
+
+print(totalXpGuild)
 highscores_sorted = sorted(highstcores, key=lambda x: x['xp_gained'], reverse=True)
 
 # Limitar top 20
@@ -1347,53 +1350,54 @@ top_20_highscores = highscores_sorted[:20]
 
 driver_path = r"C:\Users\Cristian\Desktop\edgeSel\msedgedriver.exe"
 service = Service(driver_path)
-#
-# # Configurações do Edge
-# options = webdriver.EdgeOptions()
-# options.use_chromium = True
-# options.add_argument(r"user-data-dir=C:\Users\Cristian\AppData\Local\Microsoft\Edge\User Data")
-#
-# # Inicializa o driver
-# driver = webdriver.Edge(service=service, options=options)
-#
-# # Abre WhatsApp Web
-# driver.get("https://web.whatsapp.com")
-# time.sleep(10)  # espera abrir o WhatsApp
-# # Nome do grupo ou contato
-# grupo_nome = "Eu Mesmo Eu (você)"
-#
-# # Gera a mensagem automaticamente a partir do top 20
-# yesterday_str = (datetime.now() - timedelta(days=1))
+
+# Configurações do Edge
+options = webdriver.EdgeOptions()
+options.use_chromium = True
+options.add_argument(r"user-data-dir=C:\Users\Cristian\AppData\Local\Microsoft\Edge\User Data")
+
+# Inicializa o driver
+driver = webdriver.Edge(service=service, options=options)
+
+# Abre WhatsApp Web
+driver.get("https://web.whatsapp.com")
+time.sleep(10)  # espera abrir o WhatsApp
+# Nome do grupo ou contato
+grupo_nome = "Eu Mesmo Eu (você)"
+
+# Gera a mensagem automaticamente a partir do top 20
+yesterday_str = (datetime.now() - timedelta(days=1))
 yesterday = (date.today() - timedelta(days=1)).isoformat()
-# mensagem = (
-#     f"Top 20 XP diário - Abrigo de Mendigo - {yesterday_str}\n"
-# )
-# for i, member in enumerate(top_20_highscores, start=1):
-#     xp_gained = format_xp(member['xp_gained'])
-#     mensagem += f"\u200b{i}. {member['name']} - Lv {member['level']} - {xp_gained}\n"
-#
-# mensagem += f"\n_Última Atualização Tibia: 05:40_\n\n"
-#
-# # Procurar o grupo pelo nome
-# search_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="3"]')
-# search_box.click()
-# search_box.send_keys(grupo_nome)
-# time.sleep(2)
-# search_box.send_keys(Keys.ENTER)
-#
-# # Selecionar a caixa de texto da mensagem
-# message_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="10"]')
-# message_box.click()
-# for line in mensagem.split("\n"):
-#     message_box.send_keys(line)
-#     ActionChains(driver).key_down(Keys.SHIFT).send_keys(Keys.ENTER).key_up(Keys.SHIFT).perform()
-# message_box.send_keys(Keys.ENTER)
+mensagem = (
+    f"Top 20 XP diário - Abrigo de Mendigo - {yesterday_str}\n"
+)
+for i, member in enumerate(top_20_highscores, start=1):
+    xp_gained = format_xp(member['xp_gained'])
+    mensagem += f"\u200b{i}. {member['name']} - Lv {member['level']} - {xp_gained}\n"
+
+mensagem += f"Total XP Guild: {format_xp(totalXpGuild)}\n"
+mensagem += f"\n_Última Atualização Tibia: 05:40_\n\n"
+
+# Procurar o grupo pelo nome
+search_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="3"]')
+search_box.click()
+search_box.send_keys(grupo_nome)
+time.sleep(2)
+search_box.send_keys(Keys.ENTER)
+
+# Selecionar a caixa de texto da mensagem
+message_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="10"]')
+message_box.click()
+for line in mensagem.split("\n"):
+    message_box.send_keys(line)
+    ActionChains(driver).key_down(Keys.SHIFT).send_keys(Keys.ENTER).key_up(Keys.SHIFT).perform()
+message_box.send_keys(Keys.ENTER)
 
 for player in highstcores:
     player["day"] = yesterday
 
-response = supabase.table("top_xp_diario_tibia").insert(highstcores).execute()
-print(response)
+# response = supabase.table("top_xp_diario_tibia").insert(highstcores).execute()
+# print(response)
 
 print("Mensagem enviada!")
 time.sleep(5)

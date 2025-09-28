@@ -163,6 +163,7 @@ if os.path.exists(yesterday_file):
 else:
     prev_points = {}
 
+totalXpGuild = 0
 for member in highscores:
     previous = prev_points.get(member['name'], 0)
     xp_gained = member['points'] - previous
@@ -171,6 +172,7 @@ for member in highscores:
         xp_gained = 0
 
     member['xp_gained'] = xp_gained
+    totalXpGuild += xp_gained
 
 # Ordenar pelo XP ganho
 highscores_sorted = sorted(highscores, key=lambda x: x['xp_gained'], reverse=True)
@@ -221,6 +223,7 @@ for i, member in enumerate(top_20_highscores, start=1):
     xp_gained = format_xp(member['xp_gained'])
     mensagem += f"\u200b{i}. {member['name']} - Lv {member['level']} - {xp_gained}\n"
 
+mensagem += f"Total XP Guild: {format_xp(totalXpGuild)}\n"
 mensagem += f"\n_Última Atualização Tibia: 05:40_\n\n"
 
 # Procurar o grupo pelo nome
