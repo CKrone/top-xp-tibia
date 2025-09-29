@@ -9,6 +9,7 @@ import time
 import math
 import json
 import os
+import subprocess, time
 
 
 # url = "https://ghxlnvyoxhacwsevsfws.supabase.co"
@@ -16,6 +17,14 @@ import os
 # supabase: Client = create_client(url, key)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def kill_edge():
+    try:
+        subprocess.run(["taskkill", "/F", "/IM", "msedge.exe"],
+                       check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+    time.sleep(5)  # pequena pausa
 
 def path(filename):
     print(os.path.join(BASE_DIR, filename))
@@ -1347,6 +1356,7 @@ highscores_sorted = sorted(highstcores, key=lambda x: x['xp_gained'], reverse=Tr
 # Limitar top 20
 top_20_highscores = highscores_sorted[:20]
 
+kill_edge()
 
 driver_path = r"C:\Users\Cristian\Desktop\edgeSel\msedgedriver.exe"
 service = Service(driver_path)
