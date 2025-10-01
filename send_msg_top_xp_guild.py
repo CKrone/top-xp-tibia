@@ -22,8 +22,11 @@ key = os.getenv("KEY_SUPABASE")
 supabase: Client = create_client(url, key)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+HISTORICO_DIR = os.path.join(BASE_DIR, "Historico")
+os.makedirs(HISTORICO_DIR, exist_ok=True)
+
 def path(filename):
-    return os.path.join(BASE_DIR, filename)
+    return os.path.join(HISTORICO_DIR, filename)
 
 def clean_text(text):
     return text.replace('\xa0', ' ').strip()
