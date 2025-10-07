@@ -41,7 +41,7 @@ search_box.send_keys(Keys.ENTER)
 message_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="10"]')
 message_box.click()
 
-mensagem = ':money\n:money\n Rotação GTzinha às 19:00 :money\n:money\n\n\nEK :shield\n:\nED :mask\n:\nShooter :gun\n:\nShooter :gun\n:\nQualquer vocação :person\n:\n'
+mensagem = ':money\n:money\n Rotação GTzinha às 19:30 :money\n:money\n\n\nEK :shield\n:\nED :mask\n:\nShooter :gun\n:\nShooter :gun\n:\nQualquer vocação :person\n:\n'
 
 for line in mensagem.split("\n"):
     message_box.send_keys(line)
