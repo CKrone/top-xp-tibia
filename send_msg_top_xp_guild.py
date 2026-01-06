@@ -186,7 +186,7 @@ options.add_argument(os.getenv("USER_DATA_PATH"))
 driver = webdriver.Edge(service=service, options=options)
 
 driver.get("https://web.whatsapp.com")
-time.sleep(10)
+time.sleep(50)
 grupo_nome = os.getenv("GRUPO_WHATS_MSG_TOP_XP")
 
 yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
@@ -214,7 +214,7 @@ for line in mensagem.split("\n"):
 message_box.send_keys(Keys.ENTER)
 
 print("Mensagem enviada!")
-time.sleep(15)
+time.sleep(40)
 
 driver.quit()
 
