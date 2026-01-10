@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 from selenium import webdriver
 import subprocess, time
+import sys
 import os
 
 load_dotenv()
@@ -15,9 +16,11 @@ def kill_edge():
                        check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except Exception:
         pass
-    time.sleep(3)
+    time.sleep(15)
 
 kill_edge()
+
+flag = sys.argv[1].lower() == "true"
 
 driver_path = os.getenv("EDGE_DRIVER_PATH")
 service = Service(driver_path)
@@ -28,7 +31,7 @@ options.add_argument(os.getenv("USER_DATA_PATH"))
 
 driver = webdriver.Edge(service=service, options=options)
 driver.get("https://web.whatsapp.com")
-time.sleep(10)
+time.sleep(25)
 
 grupo_nome = os.getenv("GRUPO_WHATS_MSG_GT")
 
@@ -41,8 +44,11 @@ search_box.send_keys(Keys.ENTER)
 message_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="10"]')
 message_box.click()
 
-mensagem = 'Rotação GTzinha após Wz - Time A\n\nEK :shield\n:\nED :mask\n:\nShooter :gun\n:\nShooter :gun\n:\nQualquer vocação :person\n:\n\n'
-mensagem += 'Rotação GTzinha após Wz - Time B\n\nEK :shield\n:\nED :mask\n:\nShooter :gun\n:\nShooter :gun\n:\nQualquer vocação :person\n:\n'
+if flag:
+    mensagem = 'GT da A.M.M.M no Almoço (12hrs) \n\nEK :shield\n:\nED :mask\n:\nShooter :gun\n:\nShooter :gun\n:\nQualquer vocação :person\n:\n\n'
+else:
+    mensagem = 'Rotação GTzinha após Wz 19hrs \n\nEK :shield\n:\nED :mask\n:\nShooter :gun\n:\nShooter :gun\n:\nQualquer vocação :person\n:\n\n'
+    mensagem += 'Rotação GTzinha após 22hrs \n\nEK :shield\n:\nED :mask\n:\nShooter :gun\n:\nShooter :gun\n:\nQualquer vocação :person\n:\n'
 
 for line in mensagem.split("\n"):
     message_box.send_keys(line)
@@ -50,6 +56,6 @@ for line in mensagem.split("\n"):
 message_box.send_keys(Keys.ENTER)
 
 print("Mensagem enviada!")
-time.sleep(10)
+time.sleep(25)
 
 driver.quit()
