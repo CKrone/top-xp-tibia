@@ -6,8 +6,10 @@ para pegar variáveis do env, assim possibilitando maior facilidade de manipular
 <h1>Scripts</h1>
 
 <h3>send_msg_top_xp_guild</h3>
-
 Este script tem como objetivo montar uma lista de 20 jogadores, em ordem decrescente, da quantidade de experiência obtida no dia anterior. Após montar a lista, o script inicia o navegador, abre o whatsapp e envia no grupo da guild a lista.
+
+<h3>send_msg_top_xp_list_players</h3>
+Assim como o script para enviar a lista de xp de uma guilda. Esse script envia a lista de xp mas baseado em uma lista de personagens através de configuração do env.
 
 <h3>send_msg_gt</h3>
 Este script tem como objetivo enviar uma mensagem padrão para iniciar uma lista de jogadores que queiram fazer uma quest do jogo.<br>
