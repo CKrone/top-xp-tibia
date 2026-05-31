@@ -48,47 +48,54 @@ def format_xp(value: int) -> str:
     else:
         return str(value)
 
-url = os.getenv("URL_GUILD_TIBIA")
-guild_name = os.getenv("NAME_GUILD")
+# url = os.getenv("URL_GUILD_TIBIA")
+# guild_name = os.getenv("NAME_GUILD")
 
-payload = {"GuildName": guild_name}
+# payload = {"GuildName": guild_name}
 headers = {"User-Agent": "Mozilla/5.0"}
 
-response = requests.post(url, data=payload, headers=headers)
-soup = BeautifulSoup(response.text, "lxml")
-members = []
+# response = requests.post(url, data=payload, headers=headers)
+# soup = BeautifulSoup(response.text, "lxml")
 
-caption = soup.find("div", class_="Text", string="Guild Members")
-if caption:
-    container = caption.find_parent("div", class_="TableContainer")
-    if container:
-        guild_table = container.find("table", class_="TableContent")
-        if guild_table:
-            rows = guild_table.find_all("tr")[1:]
-            for row in rows:
-                cols = row.find_all("td")
-                if len(cols) >= 6:
-                    rank = clean_text(cols[0].get_text(" ", strip=True))
-                    if not rank:
-                        rank = "Sem Rank"
-                    name_and_title = clean_text(cols[1].get_text(" ", strip=True))
-                    vocation = clean_text(cols[2].get_text(" ", strip=True))
-                    level = clean_text(cols[3].get_text(" ", strip=True))
-                    status = clean_text(cols[5].get_text(" ", strip=True))
+members = [
+    {"name": player.strip()}
+    for player in os.getenv("LISTA_PLAYERS", "").split(",")
+    if player.strip()
+]
 
-                    members.append({
-                        "rank": rank,
-                        "name_and_title": name_and_title,
-                        "vocation": vocation,
-                        "level": int(level),
-                        "status": status
-                    })
+print(members)
 
-guild_member_names_normalized = set(normalize_name(m['name_and_title'].split(' (')[0]) for m in members)
+# caption = soup.find("div", class_="Text", string="Guild Members")
+# if caption:
+#     container = caption.find_parent("div", class_="TableContainer")
+#     if container:
+#         guild_table = container.find("table", class_="TableContent")
+#         if guild_table:
+#             rows = guild_table.find_all("tr")[1:]
+#             for row in rows:
+#                 cols = row.find_all("td")
+#                 if len(cols) >= 6:
+#                     rank = clean_text(cols[0].get_text(" ", strip=True))
+#                     if not rank:
+#                         rank = "Sem Rank"
+#                     name_and_title = clean_text(cols[1].get_text(" ", strip=True))
+#                     vocation = clean_text(cols[2].get_text(" ", strip=True))
+#                     level = clean_text(cols[3].get_text(" ", strip=True))
+#                     status = clean_text(cols[5].get_text(" ", strip=True))
+#
+#                     members.append({
+#                         "rank": rank,
+#                         "name_and_title": name_and_title,
+#                         "vocation": vocation,
+#                         "level": int(level),
+#                         "status": status
+#                     })
+#
+list_players_names_normalized = set(normalize_name(m['name'].split(' (')[0]) for m in members)
 
 df_members = pd.DataFrame(members)
-df_members.to_excel(path("guild_members.xlsx"), index=False)
-print("Arquivo 'guild_members.xlsx' criado com sucesso!")
+df_members.to_excel(path("list_players.xlsx"), index=False)
+print("Arquivo 'list_players.xlsx' criado com sucesso!")
 
 professions = {
     2: "Knight",
@@ -120,7 +127,7 @@ for prof_id, prof_name in professions.items():
                 continue
 
             name = clean_text(cols[1].get_text(" ", strip=True))
-            if normalize_name(name) not in guild_member_names_normalized:
+            if normalize_name(name) not in list_players_names_normalized:
                 continue
 
             vocation = clean_text(cols[2].get_text(" ", strip=True))
@@ -141,7 +148,7 @@ for prof_id, prof_name in professions.items():
         time.sleep(0.5)
 
 yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%Y_%m_%d")
-yesterday_file = path(f"guild_highscores_previous_{yesterday_str}.json")
+yesterday_file = path(f"players_highscores_previous_{yesterday_str}.json")
 
 if os.path.exists(yesterday_file):
     with open(yesterday_file, "r", encoding="utf-8") as f:
@@ -165,7 +172,7 @@ highscores_sorted = sorted(highscores, key=lambda x: x['xp_gained'], reverse=Tru
 top_20_highscores = highscores_sorted[:20]
 
 today_str = datetime.now().strftime("%Y_%m_%d")
-daily_file = path(f"guild_highscores_previous_{today_str}.json")
+daily_file = path(f"players_highscores_previous_{today_str}.json")
 
 try:
     with open(daily_file, "w", encoding="utf-8") as f:
@@ -187,17 +194,17 @@ driver = webdriver.Edge(service=service, options=options)
 
 driver.get("https://web.whatsapp.com")
 time.sleep(50)
+
 grupo_nome = os.getenv("GRUPO_WHATS_MSG_TOP_XP")
 
 yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%d/%m/%Y")
 mensagem = (
-    f"Top 20 XP diário - Abrigo de Mendigo - {yesterday_str}\n\n"
+    f"Top XP diário - {yesterday_str}\n\n"
 )
 for i, member in enumerate(top_20_highscores, start=1):
     xp_gained = format_xp(member['xp_gained'])
     mensagem += f"\u200b{i}. {member['name']} - Lv {member['level']} - {xp_gained}\n"
 
-mensagem += f"Total XP Guild: {format_xp(totalXpGuild)}\n"
 mensagem += f"\n_Última Atualização Tibia: 05:40_\n\n"
 
 search_box = driver.find_element(
@@ -220,8 +227,3 @@ print("Mensagem enviada!")
 time.sleep(40)
 
 driver.quit()
-
-yesterday = (date.today() - timedelta(days=1)).isoformat()
-for player in top_20_highscores:
-    player["day"] = yesterday
-response = supabase.table("top_xp_diario_tibia").insert(top_20_highscores).execute()
